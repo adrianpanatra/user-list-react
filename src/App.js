@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { Pagination } from 'react-bootstrap';
+import * as React from 'react';
 import './App.css';
+import DataDetails from './DataDetails';
 
 function App() {
+  const [pagination, setPagination] = React.useState(1);
+
+  const changePagination = (position) => {
+    setPagination(position);
+    console.log("ayamg", position);
+  }
+
+  let paginationLists = [];
+  for (let number = 1; number <= 5; number++) {
+    paginationLists.push(
+      <Pagination.Item key={number} active={number === pagination} onClick={() => changePagination(number)}>
+        {number}
+      </Pagination.Item>,
+    )};
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DataDetails page={pagination} />
+      <Pagination onChange={changePagination}>{paginationLists}</Pagination>
     </div>
   );
 }
